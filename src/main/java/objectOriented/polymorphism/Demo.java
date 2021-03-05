@@ -15,22 +15,37 @@ interface Iterator {
 class Array implements Iterator {
     private String[] data;
 
-    public boolean hasNext() { ...}
+    public boolean hasNext() {
+        return true;
+    }
 
-    public String next() { ...}
+    public String next() {
+        return "";
+    }
 
-    public String remove() { ...}
+    public String remove() {
+        return "";
+    }
     //...省略其他方法...
+}
+
+class LinkedListNode {
 }
 
 class LinkedList implements Iterator {
     private LinkedListNode head;
 
-    public boolean hasNext() { ...}
+    public boolean hasNext() {
+        return true;
+    }
 
-    public String next() { ...}
+    public String next() {
+        return "";
+    }
 
-    public String remove() { ...}
+    public String remove() {
+        return "";
+    }
     //...省略其他方法...
 }
 

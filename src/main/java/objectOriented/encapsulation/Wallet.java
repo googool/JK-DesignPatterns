@@ -14,7 +14,7 @@ public class Wallet {
     // ...省略其他属性...
 
     public Wallet() {
-        this.id = IdGenerator.getInstance().generate();
+//        this.id = IdGenerator.getInstance().generate();
         this.createTime = System.currentTimeMillis();
         this.balance = BigDecimal.ZERO;
         this.balanceLastModifiedTime = System.currentTimeMillis();
@@ -39,7 +39,7 @@ public class Wallet {
 
     public void increaseBalance(BigDecimal increasedAmount) {
         if (increasedAmount.compareTo(BigDecimal.ZERO) < 0) {
-            throw new InvalidAmountException("...");
+//            throw new InvalidAmountException("...");
         }
         this.balance.add(increasedAmount);
         this.balanceLastModifiedTime = System.currentTimeMillis();
@@ -47,10 +47,10 @@ public class Wallet {
 
     public void decreaseBalance(BigDecimal decreasedAmount) {
         if (decreasedAmount.compareTo(BigDecimal.ZERO) < 0) {
-            throw new InvalidAmountException("...");
+//            throw new InvalidAmountException("...");
         }
         if (decreasedAmount.compareTo(this.balance) > 0) {
-            throw new InsufficientAmountException("...");
+//            throw new InsufficientAmountException("...");
         }
         this.balance.subtract(decreasedAmount);
         this.balanceLastModifiedTime = System.currentTimeMillis();
