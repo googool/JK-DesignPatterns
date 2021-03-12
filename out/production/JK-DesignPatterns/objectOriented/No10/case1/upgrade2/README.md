@@ -1,0 +1,1 @@
+JDK8之后的interface支持默认方法
