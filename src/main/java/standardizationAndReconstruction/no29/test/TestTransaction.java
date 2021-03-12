@@ -1,6 +1,7 @@
 package standardizationAndReconstruction.no29.test;
 
 import org.junit.Test;
+import standardizationAndReconstruction.no29.InvalidTransactionException;
 import standardizationAndReconstruction.no29.STATUS;
 import standardizationAndReconstruction.no29.Transaction;
 import standardizationAndReconstruction.no29.TransactionLock;
@@ -19,7 +20,7 @@ import static org.junit.Assert.*;
 public class TestTransaction {
     // 测试用例1
     @Test
-    public void testExecute() {
+    public void testExecute() throws InvalidTransactionException {
         Long buyerId = 123L;
         Long sellerId = 234L;
         Long productId = 345L;
@@ -46,7 +47,7 @@ public class TestTransaction {
 
     // 测试用例3
     @Test
-    public void testExecute_with_TransactionIsExpired() {
+    public void testExecute_with_TransactionIsExpired() throws InvalidTransactionException {
         Long buyerId = 123L;
         Long sellerId = 234L;
         Long productId = 345L;
