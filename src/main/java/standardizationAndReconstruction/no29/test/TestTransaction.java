@@ -5,8 +5,6 @@ import standardizationAndReconstruction.no29.STATUS;
 import standardizationAndReconstruction.no29.Transaction;
 import standardizationAndReconstruction.no29.TransactionLock;
 
-import javax.transaction.InvalidTransactionException;
-
 import static org.junit.Assert.*;
 
 /**
@@ -21,7 +19,7 @@ import static org.junit.Assert.*;
 public class TestTransaction {
     // 测试用例1
     @Test
-    public void testExecute() throws InvalidTransactionException {
+    public void testExecute() {
         Long buyerId = 123L;
         Long sellerId = 234L;
         Long productId = 345L;
@@ -48,7 +46,7 @@ public class TestTransaction {
 
     // 测试用例3
     @Test
-    public void testExecute_with_TransactionIsExpired() throws InvalidTransactionException {
+    public void testExecute_with_TransactionIsExpired() {
         Long buyerId = 123L;
         Long sellerId = 234L;
         Long productId = 345L;
