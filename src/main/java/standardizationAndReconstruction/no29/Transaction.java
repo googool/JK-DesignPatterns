@@ -66,7 +66,9 @@ public class Transaction {
         return walletTransactionId;
     }
 
-    public Transaction(String preAssignedId, Long buyerId, Long sellerId, Long productId, String orderId) {
+    // 交易 id 的赋值逻辑稍微复杂。我们最好也要测试一下，以保证这部分逻辑的正确性。
+    // 为了方便测试，我们可以把 id 赋值这部分逻辑单独抽象到一个函数中，具体的代码实现如下所示：
+    protected void fillTransactionId(String preAssignedId) {
         if (preAssignedId != null && !preAssignedId.isEmpty()) {
             this.id = preAssignedId;
         } else {
@@ -75,12 +77,22 @@ public class Transaction {
         if (!this.id.startsWith("t_")) {
             this.id = "t_" + preAssignedId;
         }
+    }
+
+    public Transaction(String preAssignedId, Long buyerId, Long sellerId, Long productId, String orderId) {
+        fillTransactionId(preAssignedId);
         this.buyerId = buyerId;
         this.sellerId = sellerId;
         this.productId = productId;
         this.orderId = orderId;
         this.status = STATUS.TO_BE_EXECUTD;
         this.createTimestamp = System.currentTimeMillis();
+    }
+
+    // 代码中包含跟“时间”有关的“未决行为”逻辑。我们一般的处理方式是将这种未决行为逻辑重新封装。
+    protected boolean isExpired() {
+        long executionInvokedTimestamp = System.currentTimeMillis();
+        return executionInvokedTimestamp - createTimestamp > 14L * 24 * 3600 * 1000;
     }
 
     // 负责执行转账操作
@@ -99,7 +111,11 @@ public class Transaction {
             }
             if (status == STATUS.EXECUTED) return true; // double check
             long executionInvokedTimestamp = System.currentTimeMillis();
-            if (executionInvokedTimestamp - createTimestamp > 14L * 24 * 3600 * 1000) {
+            /*if (executionInvokedTimestamp - createTimestamp > 14L * 24 * 3600 * 1000) {
+                this.status = STATUS.EXPIRED;
+                return false;
+            }*/
+            if (isExpired()) {
                 this.status = STATUS.EXPIRED;
                 return false;
             }

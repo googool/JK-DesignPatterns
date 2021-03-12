@@ -7,8 +7,7 @@ import standardizationAndReconstruction.no29.TransactionLock;
 
 import javax.transaction.InvalidTransactionException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by chenjinxin on 2021/3/12 下午2:29
@@ -20,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 // 5. 钱包（WalletRpcService）转钱失败，交易状态设置为 FAILED，函数返回 false。
 // 6. 交易正在执行着，不会被重复执行，函数直接返回 false。
 public class TestTransaction {
+    // 测试用例1
     @Test
     public void testExecute() throws InvalidTransactionException {
         Long buyerId = 123L;
@@ -41,10 +41,35 @@ public class TestTransaction {
         transaction.setWalletRpcService(new MockWalletRpcServiceOne());
         transaction.setLock(mockLock);
         boolean executedResult = transaction.execute();
-        // 测试用例1
         assertTrue(executedResult);
         assertEquals(STATUS.EXECUTED, transaction.getStatus());
-        // 测试用例3
 
+    }
+
+    // 测试用例3
+    @Test
+    public void testExecute_with_TransactionIsExpired() throws InvalidTransactionException {
+        Long buyerId = 123L;
+        Long sellerId = 234L;
+        Long productId = 345L;
+        String orderId = "456L";
+        Transaction transaction = new Transaction(null, buyerId, sellerId, productId, orderId) {
+            protected boolean isExpired() {
+                return true;
+            }
+        };
+
+        TransactionLock mockLock = new TransactionLock() {
+            public boolean lock(String id) {
+                return true;
+            }
+
+            public void unlock() {
+            }
+        };
+        transaction.setLock(mockLock);
+        boolean actualResult = transaction.execute();
+        assertFalse(actualResult);
+        assertEquals(STATUS.EXPIRED, transaction.getStatus());
     }
 }
