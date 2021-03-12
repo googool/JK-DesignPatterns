@@ -5,6 +5,7 @@ package standardizationAndReconstruction.no29;
  */
 
 public class Transaction {
+    private final Long TIME_OUT = 14L * 24 * 3600 * 1000;
     private String id;
     private Long buyerId;
     private Long sellerId;
@@ -89,7 +90,7 @@ public class Transaction {
     // 代码中包含跟“时间”有关的“未决行为”逻辑。我们一般的处理方式是将这种未决行为逻辑重新封装。
     protected boolean isExpired() {
         long executionInvokedTimestamp = System.currentTimeMillis();
-        return executionInvokedTimestamp - createTimestamp > 14L * 24 * 3600 * 1000;
+        return executionInvokedTimestamp - createTimestamp > TIME_OUT;
     }
 
     // 负责执行转账操作
