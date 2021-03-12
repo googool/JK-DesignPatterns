@@ -16,12 +16,12 @@ public class RedisDistributedLock {
 
 
     public boolean lockTransaction(String id) {
-        System.out.println("Transaction is locked. id: " + id);
+        System.out.println("RedisDistributedLock.lockTransaction: Transaction is locked. id: " + id);
         return true;
     }
 
     public boolean unlockTransaction(String id) {
-        System.out.println("Transaction is unlocked. id: " + id);
+        System.out.println("RedisDistributedLock.unlockTransaction: Transaction is unlocked. id: " + id);
         return true;
     }
 }
