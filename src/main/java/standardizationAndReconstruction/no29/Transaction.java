@@ -14,7 +14,9 @@ public class Transaction {
     private Double amount = 0.0;
     private STATUS status;
     private String walletTransactionId;
+    // 添加一个成员变量及其set方法
     private TransactionLock lock;
+    private WalletRpcService walletRpcService;
 
     public void setLock(TransactionLock lock) {
         this.lock = lock;
@@ -23,9 +25,6 @@ public class Transaction {
     public void setWalletRpcService(WalletRpcService walletRpcService) {
         this.walletRpcService = walletRpcService;
     }
-
-    // 添加一个成员变量及其set方法
-    private WalletRpcService walletRpcService;
 
     // ...get() methods...
     public String getId() {
