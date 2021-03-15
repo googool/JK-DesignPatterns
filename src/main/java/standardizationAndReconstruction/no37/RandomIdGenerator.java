@@ -82,6 +82,10 @@ public class RandomIdGenerator implements LogTraceIdGenerator {
      */
     @VisibleForTesting
     protected String generateRandomAlphameric(int length) {
+        if (length <= 0) {
+            throw new IllegalArgumentException("...");
+        }
+
         char[] randomChars = new char[length];
         int count = 0;
         Random random = new Random();
