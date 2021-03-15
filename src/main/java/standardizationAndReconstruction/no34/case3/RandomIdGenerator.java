@@ -17,6 +17,7 @@ public class RandomIdGenerator implements LogTraceIdGenerator {
 
     @Override
     public String generate() {
+        System.out.println("case3");
         String substrOfHostName = getLastfieldOfHostName();
         long currentTimeMillis = System.currentTimeMillis();
         String randomString = generateRandomAlphameric(8);
