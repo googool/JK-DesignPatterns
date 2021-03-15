@@ -50,6 +50,9 @@ public class RandomIdGenerator implements LogTraceIdGenerator {
     private String getLastfieldOfHostName() throws UnknownHostException {
         String substrOfHostName = null;
         String hostName = InetAddress.getLocalHost().getHostName();
+        if (hostName == null || hostName.isEmpty()) { // 此处做判断
+            throw new UnknownHostException("...");
+        }
         substrOfHostName = getLastSubstrSplittedByDot(hostName);
         return substrOfHostName;
     }
@@ -62,6 +65,9 @@ public class RandomIdGenerator implements LogTraceIdGenerator {
      */
     @VisibleForTesting
     protected String getLastSubstrSplittedByDot(String hostName) {
+        if (hostName == null || hostName.isEmpty()) {
+            throw new IllegalArgumentException("..."); //运行时异常
+        }
         String[] tokens = hostName.split("\\.");
         String substrOfHostName = tokens[tokens.length - 1];
         return substrOfHostName;
