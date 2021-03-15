@@ -29,15 +29,15 @@ public class RandomIdGenerator implements LogTraceIdGenerator {
      */
     @Override
     public String generate() throws IdGenerationFailureException {
-        System.out.println("case3");
-        String substrOfHostName = getLastfieldOfHostName();
-        if (substrOfHostName == null || substrOfHostName.isEmpty()) {
+        String substrOfHostName = null;
+        try {
+            substrOfHostName = getLastfieldOfHostName();
+        } catch (UnknownHostException e) {
             throw new IdGenerationFailureException("host name is empty.");
         }
         long currentTimeMillis = System.currentTimeMillis();
         String randomString = generateRandomAlphameric(8);
-        String id = String.format("%s-%d-%s",
-                substrOfHostName, currentTimeMillis, randomString);
+        String id = String.format("%s-%d-%s", substrOfHostName, currentTimeMillis, randomString);
         return id;
     }
 
@@ -47,14 +47,10 @@ public class RandomIdGenerator implements LogTraceIdGenerator {
      *
      * @return the last field of hostname. Returns null if hostname is not obtained.
      */
-    private String getLastfieldOfHostName() {
+    private String getLastfieldOfHostName() throws UnknownHostException {
         String substrOfHostName = null;
-        try {
-            String hostName = InetAddress.getLocalHost().getHostName();
-            substrOfHostName = getLastSubstrSplittedByDot(hostName);
-        } catch (UnknownHostException e) {
-            logger.warn("Failed to get the host name.", e);
-        }
+        String hostName = InetAddress.getLocalHost().getHostName();
+        substrOfHostName = getLastSubstrSplittedByDot(hostName);
         return substrOfHostName;
     }
 
