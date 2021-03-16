@@ -3,6 +3,9 @@ package standardizationAndReconstruction.no34.case3;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import standardizationAndReconstruction.no34.case2.LogTraceIdGenerator;
+import standardizationAndReconstruction.no37.IdGenerationFailureException;
+
+import java.net.UnknownHostException;
 
 /**
  * Created by chenjinxin on 2021/3/15 下午1:46
@@ -12,7 +15,12 @@ class RandomIdGeneratorTest {
     @Test
     void generate() {
         LogTraceIdGenerator logTraceIdGenerator = new standardizationAndReconstruction.no34.case3.RandomIdGenerator();
-        String id = logTraceIdGenerator.generate();
+        String id = null;
+        try {
+            id = logTraceIdGenerator.generate();
+        } catch (IdGenerationFailureException | UnknownHostException e) {
+            e.printStackTrace();
+        }
         System.out.println(id);
     }
 
