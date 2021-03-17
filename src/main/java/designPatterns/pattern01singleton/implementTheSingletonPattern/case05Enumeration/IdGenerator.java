@@ -15,7 +15,7 @@ https://www.cnblogs.com/jamaler/p/11421049.html
  */
 public enum IdGenerator {
     INSTANCE;
-    private AtomicLong id = new AtomicLong(0);
+    private final AtomicLong id = new AtomicLong(0);
 
     public long getId() {
         return id.incrementAndGet();
