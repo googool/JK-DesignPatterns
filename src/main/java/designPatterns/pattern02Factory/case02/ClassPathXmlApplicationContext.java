@@ -27,6 +27,8 @@ public class ClassPathXmlApplicationContext implements ApplicationContext {
             }
             List<BeanDefinition> beanDefinitions = beanConfigParser.parse(in);
             beansFactory.addBeanDefinitions(beanDefinitions);
+        } catch (BeanCreationFailureException e) {
+            e.printStackTrace();
         } finally {
             if (in != null) {
                 try {
@@ -39,7 +41,7 @@ public class ClassPathXmlApplicationContext implements ApplicationContext {
     }
 
     @Override
-    public Object getBean(String beanId) {
+    public Object getBean(String beanId) throws BeanCreationFailureException, NoSuchBeanDefinitionException {
         return beansFactory.getBean(beanId);
     }
 }
