@@ -8,5 +8,6 @@ public class Demo {
         //UserControllerProxy使用举例
         MetricsCollectorProxy proxy = new MetricsCollectorProxy();
         IUserController userController = (IUserController) proxy.createProxy(new UserController());
+        userController.login("171", "1499");
     }
 }
